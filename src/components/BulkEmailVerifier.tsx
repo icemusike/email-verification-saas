@@ -170,7 +170,7 @@ const BulkEmailVerifier: React.FC = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
+    <div className="card p-6">
       <h2 className="text-xl font-semibold mb-4">Bulk Email Verification</h2>
       
       <VerificationSettings 
@@ -179,7 +179,7 @@ const BulkEmailVerifier: React.FC = () => {
       />
       
       <div className="mb-6">
-        <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+        <div className="upload-area">
           <input
             type="file"
             ref={fileInputRef}
@@ -189,8 +189,10 @@ const BulkEmailVerifier: React.FC = () => {
             id="file-upload"
           />
           <label htmlFor="file-upload" className="cursor-pointer">
-            <Upload className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-            <p className="text-sm text-gray-600">
+            <div className="bg-blue-50 rounded-full p-3 mx-auto mb-3 w-16 h-16 flex items-center justify-center">
+              <Upload className="h-8 w-8 text-blue-500" />
+            </div>
+            <p className="text-sm text-gray-600 font-medium">
               Drag and drop your file here, or <span className="text-blue-600">browse</span>
             </p>
             <p className="text-xs text-gray-500 mt-1">
@@ -203,16 +205,21 @@ const BulkEmailVerifier: React.FC = () => {
         </div>
         
         {emails.length > 0 && (
-          <div className="mt-4 flex items-center justify-between">
+          <div className="mt-4 flex items-center justify-between bg-gray-50 p-3 rounded-md">
             <div className="flex items-center">
-              <FileText className="h-5 w-5 text-gray-500 mr-2" />
-              <span className="text-sm text-gray-700">
-                {emails.length} email{emails.length !== 1 ? 's' : ''} loaded
-              </span>
+              <div className="bg-blue-100 rounded-full p-2 mr-3">
+                <FileText className="h-5 w-5 text-blue-600" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-700">
+                  {emails.length} email{emails.length !== 1 ? 's' : ''} loaded
+                </p>
+                <p className="text-xs text-gray-500">Ready for verification</p>
+              </div>
             </div>
             <button
               onClick={clearData}
-              className="text-sm text-red-600 hover:text-red-800 flex items-center"
+              className="text-sm text-red-600 hover:text-red-800 flex items-center px-3 py-1 rounded-md hover:bg-red-50 transition-colors duration-200"
             >
               <X className="h-4 w-4 mr-1" />
               Clear
@@ -225,7 +232,7 @@ const BulkEmailVerifier: React.FC = () => {
         <button
           onClick={handleVerify}
           disabled={isVerifying || emails.length === 0}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 flex items-center"
+          className="btn btn-primary flex items-center"
         >
           {isVerifying ? (
             <>
@@ -241,21 +248,21 @@ const BulkEmailVerifier: React.FC = () => {
           <div className="flex space-x-2">
             <button
               onClick={() => handleExport('all')}
-              className="px-3 py-1 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200 text-sm flex items-center"
+              className="btn btn-secondary flex items-center text-sm"
             >
               <Download className="h-4 w-4 mr-1" />
               Export All
             </button>
             <button
               onClick={() => handleExport('valid')}
-              className="px-3 py-1 bg-green-100 text-green-800 rounded-md hover:bg-green-200 text-sm flex items-center"
+              className="btn btn-success flex items-center text-sm"
             >
               <Download className="h-4 w-4 mr-1" />
               Export Valid
             </button>
             <button
               onClick={() => handleExport('invalid')}
-              className="px-3 py-1 bg-red-100 text-red-800 rounded-md hover:bg-red-200 text-sm flex items-center"
+              className="btn btn-danger flex items-center text-sm"
             >
               <Download className="h-4 w-4 mr-1" />
               Export Invalid
@@ -270,9 +277,9 @@ const BulkEmailVerifier: React.FC = () => {
             <span className="text-sm font-medium text-gray-700">Progress</span>
             <span className="text-sm text-gray-500">{progress}%</span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2.5">
+          <div className="progress-bar">
             <div
-              className="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
+              className="progress-value bg-blue-600"
               style={{ width: `${progress}%` }}
             ></div>
           </div>
@@ -286,73 +293,59 @@ const BulkEmailVerifier: React.FC = () => {
       
       {stats.processed > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-gray-50 p-3 rounded-md">
-            <p className="text-xs text-gray-500">Total</p>
-            <p className="text-lg font-semibold">{stats.total}</p>
+          <div className="stat-card bg-gray-50">
+            <p className="stat-label text-gray-500">Total</p>
+            <p className="stat-value">{stats.total}</p>
           </div>
-          <div className="bg-green-50 p-3 rounded-md">
-            <p className="text-xs text-green-600">Valid</p>
-            <p className="text-lg font-semibold text-green-700">{stats.valid}</p>
+          <div className="stat-card bg-green-50">
+            <p className="stat-label text-green-600">Valid</p>
+            <p className="stat-value text-green-700">{stats.valid}</p>
           </div>
-          <div className="bg-red-50 p-3 rounded-md">
-            <p className="text-xs text-red-600">Invalid</p>
-            <p className="text-lg font-semibold text-red-700">{stats.invalid}</p>
+          <div className="stat-card bg-red-50">
+            <p className="stat-label text-red-600">Invalid</p>
+            <p className="stat-value text-red-700">{stats.invalid}</p>
           </div>
-          <div className="bg-yellow-50 p-3 rounded-md">
-            <p className="text-xs text-yellow-600">Disposable</p>
-            <p className="text-lg font-semibold text-yellow-700">{stats.disposable}</p>
+          <div className="stat-card bg-yellow-50">
+            <p className="stat-label text-yellow-600">Disposable</p>
+            <p className="stat-value text-yellow-700">{stats.disposable}</p>
           </div>
-          <div className="bg-purple-50 p-3 rounded-md">
-            <p className="text-xs text-purple-600">Role-Based</p>
-            <p className="text-lg font-semibold text-purple-700">{stats.roleBased}</p>
+          <div className="stat-card bg-purple-50">
+            <p className="stat-label text-purple-600">Role-Based</p>
+            <p className="stat-value text-purple-700">{stats.roleBased}</p>
           </div>
-          <div className="bg-blue-50 p-3 rounded-md">
-            <p className="text-xs text-blue-600">Free Providers</p>
-            <p className="text-lg font-semibold text-blue-700">{stats.free}</p>
+          <div className="stat-card bg-blue-50">
+            <p className="stat-label text-blue-600">Free Providers</p>
+            <p className="stat-value text-blue-700">{stats.free}</p>
           </div>
-          <div className="bg-orange-50 p-3 rounded-md">
-            <p className="text-xs text-orange-600">Typos</p>
-            <p className="text-lg font-semibold text-orange-700">{stats.typos}</p>
+          <div className="stat-card bg-orange-50">
+            <p className="stat-label text-orange-600">Typos</p>
+            <p className="stat-value text-orange-700">{stats.typos}</p>
           </div>
-          <div className="bg-indigo-50 p-3 rounded-md">
-            <p className="text-xs text-indigo-600">Processed</p>
-            <p className="text-lg font-semibold text-indigo-700">{stats.processed}</p>
+          <div className="stat-card bg-indigo-50">
+            <p className="stat-label text-indigo-600">Processed</p>
+            <p className="stat-value text-indigo-700">{stats.processed}</p>
           </div>
         </div>
       )}
       
       {results.length > 0 && (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto border rounded-lg">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+            <thead>
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Email
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Syntax
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Domain
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  MX
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  SMTP
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Type
-                </th>
+                <th className="table-header rounded-tl-lg">Email</th>
+                <th className="table-header">Status</th>
+                <th className="table-header">Syntax</th>
+                <th className="table-header">Domain</th>
+                <th className="table-header">MX</th>
+                <th className="table-header">SMTP</th>
+                <th className="table-header rounded-tr-lg">Type</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {results.map((result, index) => (
-                <tr key={index} className={result.isValid ? 'bg-green-50' : 'bg-red-50'}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                <tr key={index} className={result.isValid ? 'bg-green-50/30' : 'bg-red-50/30'}>
+                  <td className="table-cell font-medium text-gray-900">
                     {result.email}
                     {result.isTypo && result.suggestedCorrection && (
                       <div className="text-xs text-yellow-600">
@@ -360,62 +353,54 @@ const BulkEmailVerifier: React.FC = () => {
                       </div>
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      result.isValid ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                    }`}>
+                  <td className="table-cell">
+                    <span className={`badge ${result.isValid ? 'badge-success' : 'badge-danger'}`}>
                       {result.isValid ? 'Valid' : 'Invalid'}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <td className="table-cell">
                     {result.syntaxValid ? (
                       <Check className="h-5 w-5 text-green-500" />
                     ) : (
                       <X className="h-5 w-5 text-red-500" />
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <td className="table-cell">
                     {result.domainValid ? (
                       <Check className="h-5 w-5 text-green-500" />
                     ) : (
                       <X className="h-5 w-5 text-red-500" />
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <td className="table-cell">
                     {result.mxRecordValid ? (
                       <Check className="h-5 w-5 text-green-500" />
                     ) : (
                       <X className="h-5 w-5 text-red-500" />
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <td className="table-cell">
                     {result.smtpValid ? (
                       <Check className="h-5 w-5 text-green-500" />
                     ) : (
                       <X className="h-5 w-5 text-red-500" />
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    {result.isDisposable && (
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 mr-1">
-                        Disposable
-                      </span>
-                    )}
-                    {result.isRoleBased && (
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800 mr-1">
-                        Role
-                      </span>
-                    )}
-                    {result.isFree && (
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 mr-1">
-                        Free
-                      </span>
-                    )}
-                    {result.isTypo && (
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
-                        Typo
-                      </span>
-                    )}
+                  <td className="table-cell">
+                    <div className="flex flex-wrap gap-1">
+                      {result.isDisposable && (
+                        <span className="badge badge-warning">Disposable</span>
+                      )}
+                      {result.isRoleBased && (
+                        <span className="badge badge-purple">Role</span>
+                      )}
+                      {result.isFree && (
+                        <span className="badge badge-info">Free</span>
+                      )}
+                      {result.isTypo && (
+                        <span className="badge badge-orange">Typo</span>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}

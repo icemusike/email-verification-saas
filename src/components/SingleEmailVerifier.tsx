@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, X, Loader2, AlertTriangle } from 'lucide-react';
+import { Check, X, Loader2, AlertTriangle, Search } from 'lucide-react';
 import { EmailVerificationResult, VerificationSettings as VerificationSettingsType } from '../types';
 import { verifySingleEmail, defaultVerificationSettings } from '../services/emailVerification';
 import VerificationSettings from './VerificationSettings';
@@ -29,7 +29,7 @@ const SingleEmailVerifier: React.FC = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
+    <div className="card p-6">
       <h2 className="text-xl font-semibold mb-4">Single Email Verification</h2>
       
       <VerificationSettings 
@@ -38,17 +38,22 @@ const SingleEmailVerifier: React.FC = () => {
       />
       
       <div className="flex space-x-2">
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Enter email address"
-          className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        <div className="relative flex-1">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter email address"
+            className="input w-full pl-10"
+          />
+          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <Search className="h-4 w-4" />
+          </div>
+        </div>
         <button
           onClick={handleVerify}
           disabled={isVerifying || !email}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+          className="btn btn-primary"
         >
           {isVerifying ? (
             <Loader2 className="h-5 w-5 animate-spin" />
@@ -59,13 +64,17 @@ const SingleEmailVerifier: React.FC = () => {
       </div>
 
       {result && (
-        <div className="mt-6 border rounded-md overflow-hidden">
+        <div className="mt-6 border rounded-lg overflow-hidden shadow-sm">
           <div className={`p-4 ${result.isValid ? 'bg-green-50' : 'bg-red-50'}`}>
             <div className="flex items-center">
               {result.isValid ? (
-                <Check className="h-5 w-5 text-green-500 mr-2" />
+                <div className="rounded-full bg-green-100 p-1 mr-2">
+                  <Check className="h-5 w-5 text-green-600" />
+                </div>
               ) : (
-                <X className="h-5 w-5 text-red-500 mr-2" />
+                <div className="rounded-full bg-red-100 p-1 mr-2">
+                  <X className="h-5 w-5 text-red-600" />
+                </div>
               )}
               <span className="text-lg font-medium">
                 {result.email} is {result.isValid ? 'valid' : 'invalid'}
@@ -88,7 +97,7 @@ const SingleEmailVerifier: React.FC = () => {
               </div>
               <button
                 onClick={() => handleCorrection(result.suggestedCorrection!)}
-                className="text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-800 px-2 py-1 rounded"
+                className="text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-800 px-2 py-1 rounded transition-colors duration-200"
               >
                 Use this instead
               </button>
@@ -99,7 +108,7 @@ const SingleEmailVerifier: React.FC = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <div>
                 <p className="text-sm text-gray-500">Syntax Check</p>
-                <p className="flex items-center">
+                <p className="flex items-center mt-1">
                   {result.syntaxValid ? (
                     <Check className="h-4 w-4 text-green-500 mr-1" />
                   ) : (
@@ -110,7 +119,7 @@ const SingleEmailVerifier: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Domain Check</p>
-                <p className="flex items-center">
+                <p className="flex items-center mt-1">
                   {result.domainValid ? (
                     <Check className="h-4 w-4 text-green-500 mr-1" />
                   ) : (
@@ -121,7 +130,7 @@ const SingleEmailVerifier: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">MX Record</p>
-                <p className="flex items-center">
+                <p className="flex items-center mt-1">
                   {result.mxRecordValid ? (
                     <Check className="h-4 w-4 text-green-500 mr-1" />
                   ) : (
@@ -132,7 +141,7 @@ const SingleEmailVerifier: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">SMTP Check</p>
-                <p className="flex items-center">
+                <p className="flex items-center mt-1">
                   {result.smtpValid ? (
                     <Check className="h-4 w-4 text-green-500 mr-1" />
                   ) : (
@@ -143,7 +152,7 @@ const SingleEmailVerifier: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Disposable Email</p>
-                <p className="flex items-center">
+                <p className="flex items-center mt-1">
                   {result.isDisposable ? (
                     <X className="h-4 w-4 text-red-500 mr-1" />
                   ) : (
@@ -154,7 +163,7 @@ const SingleEmailVerifier: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Role-Based Email</p>
-                <p className="flex items-center">
+                <p className="flex items-center mt-1">
                   {result.isRoleBased ? (
                     <X className="h-4 w-4 text-red-500 mr-1" />
                   ) : (
@@ -165,7 +174,7 @@ const SingleEmailVerifier: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Free Email Provider</p>
-                <p className="flex items-center">
+                <p className="flex items-center mt-1">
                   {result.isFree ? (
                     <AlertTriangle className="h-4 w-4 text-yellow-500 mr-1" />
                   ) : (
@@ -176,7 +185,7 @@ const SingleEmailVerifier: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-500">Typo Detection</p>
-                <p className="flex items-center">
+                <p className="flex items-center mt-1">
                   {result.isTypo ? (
                     <AlertTriangle className="h-4 w-4 text-yellow-500 mr-1" />
                   ) : (
@@ -187,8 +196,8 @@ const SingleEmailVerifier: React.FC = () => {
               </div>
             </div>
             {result.details && (
-              <div className="mt-4">
-                <p className="text-sm text-gray-500">Details</p>
+              <div className="mt-4 p-3 bg-gray-50 rounded-md">
+                <p className="text-sm text-gray-500 mb-1">Details</p>
                 <p className="text-sm">{result.details}</p>
               </div>
             )}

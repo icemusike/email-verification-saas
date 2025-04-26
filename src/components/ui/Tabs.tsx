@@ -27,7 +27,7 @@ interface TabsListProps {
 }
 
 export const TabsList: React.FC<TabsListProps> = ({ className, children }) => {
-  return <div className={className}>{children}</div>;
+  return <div className={`bg-gray-100 p-1 rounded-lg ${className}`}>{children}</div>;
 };
 
 interface TabsTriggerProps {
@@ -46,11 +46,11 @@ export const TabsTrigger: React.FC<TabsTriggerProps> = ({ value, children }) => 
   
   return (
     <button
-      className={`px-4 py-2 text-sm font-medium ${
+      className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
         isActive
-          ? 'bg-blue-600 text-white'
-          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-      } rounded-md transition-colors`}
+          ? 'bg-white text-blue-600 shadow-sm'
+          : 'bg-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-200/50'
+      }`}
       onClick={() => tabs.onValueChange(value)}
     >
       {children}
@@ -74,7 +74,7 @@ export const TabsContent: React.FC<TabsContentProps> = ({ value, children }) => 
     return null;
   }
   
-  return <div>{children}</div>;
+  return <div className="animate-fadeIn">{children}</div>;
 };
 
 Tabs.displayName = 'Tabs';

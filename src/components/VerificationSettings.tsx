@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Settings, Info } from 'lucide-react';
-import { VerificationSettings as SettingsType, defaultVerificationSettings } from '../services/emailVerification';
+import { VerificationSettings as SettingsType } from '../types';
+import { defaultVerificationSettings } from '../services/emailVerification';
 
 interface VerificationSettingsProps {
   settings: SettingsType;
@@ -40,19 +41,22 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({
     <div className="mb-6">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center text-sm text-gray-600 hover:text-gray-900"
+        className="flex items-center text-sm text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md hover:bg-gray-100 transition-colors duration-200"
       >
-        <Settings className="h-4 w-4 mr-1" />
+        <Settings className="h-4 w-4 mr-2" />
         Verification Settings
+        <span className="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">
+          {isOpen ? 'Hide' : 'Show'}
+        </span>
       </button>
 
       {isOpen && (
-        <div className="mt-4 p-4 bg-gray-50 rounded-md border border-gray-200">
+        <div className="mt-4 p-5 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-md font-medium">Verification Options</h3>
+            <h3 className="text-md font-medium text-gray-900">Verification Options</h3>
             <button
               onClick={resetToDefaults}
-              className="text-xs text-blue-600 hover:text-blue-800"
+              className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 rounded hover:bg-blue-50 transition-colors duration-200"
             >
               Reset to Defaults
             </button>
@@ -72,7 +76,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({
               </label>
               <div className="ml-1 text-gray-400 cursor-help group relative">
                 <Info className="h-3 w-3" />
-                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48">
+                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48 z-10">
                   Validates the format of the email address
                 </div>
               </div>
@@ -91,7 +95,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({
               </label>
               <div className="ml-1 text-gray-400 cursor-help group relative">
                 <Info className="h-3 w-3" />
-                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48">
+                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48 z-10">
                   Verifies that the domain exists
                 </div>
               </div>
@@ -110,7 +114,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({
               </label>
               <div className="ml-1 text-gray-400 cursor-help group relative">
                 <Info className="h-3 w-3" />
-                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48">
+                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48 z-10">
                   Checks if the domain has mail exchange records
                 </div>
               </div>
@@ -129,7 +133,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({
               </label>
               <div className="ml-1 text-gray-400 cursor-help group relative">
                 <Info className="h-3 w-3" />
-                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48">
+                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48 z-10">
                   Verifies if the mail server accepts the email address
                 </div>
               </div>
@@ -148,7 +152,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({
               </label>
               <div className="ml-1 text-gray-400 cursor-help group relative">
                 <Info className="h-3 w-3" />
-                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48">
+                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48 z-10">
                   Identifies temporary or disposable email addresses
                 </div>
               </div>
@@ -167,7 +171,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({
               </label>
               <div className="ml-1 text-gray-400 cursor-help group relative">
                 <Info className="h-3 w-3" />
-                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48">
+                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48 z-10">
                   Identifies non-personal email addresses (e.g., info@, support@)
                 </div>
               </div>
@@ -186,7 +190,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({
               </label>
               <div className="ml-1 text-gray-400 cursor-help group relative">
                 <Info className="h-3 w-3" />
-                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48">
+                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48 z-10">
                   Identifies emails from free providers like Gmail, Yahoo, etc.
                 </div>
               </div>
@@ -205,7 +209,7 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({
               </label>
               <div className="ml-1 text-gray-400 cursor-help group relative">
                 <Info className="h-3 w-3" />
-                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48">
+                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48 z-10">
                   Identifies potential typos in email domains
                 </div>
               </div>
@@ -224,29 +228,31 @@ const VerificationSettings: React.FC<VerificationSettingsProps> = ({
               </label>
               <div className="ml-1 text-gray-400 cursor-help group relative">
                 <Info className="h-3 w-3" />
-                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48">
+                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded p-2 w-48 z-10">
                   Provides suggestions for correcting typos
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-4">
-            <label htmlFor="concurrentLimit" className="block text-sm text-gray-700 mb-1">
+          <div className="mt-4 p-3 bg-blue-50 rounded-md">
+            <label htmlFor="concurrentLimit" className="block text-sm text-gray-700 mb-1 font-medium">
               Concurrent Verification Limit (1-10)
             </label>
-            <input
-              type="number"
-              id="concurrentLimit"
-              min="1"
-              max="10"
-              value={settings.concurrentLimit}
-              onChange={handleConcurrentLimitChange}
-              className="w-full md:w-24 px-2 py-1 text-sm border border-gray-300 rounded-md"
-            />
-            <p className="text-xs text-gray-500 mt-1">
-              Higher values may improve speed but increase server load
-            </p>
+            <div className="flex items-center">
+              <input
+                type="number"
+                id="concurrentLimit"
+                min="1"
+                max="10"
+                value={settings.concurrentLimit}
+                onChange={handleConcurrentLimitChange}
+                className="w-full md:w-24 px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+              <p className="text-xs text-gray-500 ml-3">
+                Higher values may improve speed but increase server load
+              </p>
+            </div>
           </div>
         </div>
       )}
