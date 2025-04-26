@@ -103,7 +103,7 @@ const BulkEmailVerifier: React.FC = () => {
             };
           });
           
-          setProgress(Math.floor((prev.processed + 1) / emails.length * 100));
+          setProgress(Math.floor((stats.processed + 1) / emails.length * 100));
         },
         settings
       );
@@ -272,7 +272,7 @@ const BulkEmailVerifier: React.FC = () => {
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2.5">
             <div
-              className="bg-blue-600 h-2.5 rounded-full"
+              className="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             ></div>
           </div>

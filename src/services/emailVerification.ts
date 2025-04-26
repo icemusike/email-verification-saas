@@ -315,7 +315,7 @@ export const verifyBulkEmails = async (
   
   // Process emails in batches
   for (let i = 0; i < emails.length; i += concurrentLimit) {
-    const batch = emails.slice(i, i + concurrentLimit);
+    const batch = emails.slice(i, Math.min(i + concurrentLimit, emails.length));
     
     // Process batch in parallel
     await Promise.all(
